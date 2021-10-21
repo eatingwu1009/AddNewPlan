@@ -5,11 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AddNewPlan"
              mc:Ignorable="d" d:DesignWidth="400" Height="200">
-    <Grid Margin="0,0,-35,0">
-        <Border Background="AliceBlue" BorderThickness="1" HorizontalAlignment="Left" Height="125" VerticalAlignment="Top" Width="300" Margin="0,0,-50,0"/>
-        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Choose Machine :" FontFamily="Yu Gothic UI Semibold" VerticalAlignment="Top" Margin="20,10,0,0" TextDecorations="Underline" FontSize="14"/>
-        <ComboBox Name="machine" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="20,50,0,0" ItemsSource="{Binding MachineName}" RenderTransformOrigin="0.25,0.545" FontSize="14"/>
-        <Button Content="AddBeam" HorizontalAlignment="Left" VerticalAlignment="Top" Width="85" FontSize="14" Margin="155,50,0,0" Click="Button_Click" RenderTransformOrigin="0.133,0.5" FontFamily="Yu Gothic UI Semibold"/>
-
+    <Grid Margin="0,0,-10,-65">
+        <Border Background="AliceBlue" BorderThickness="1" HorizontalAlignment="Left" Width="275" Height="240" VerticalAlignment="Top">
+            <ListBox HorizontalAlignment="Left" Height="109" Margin="19,110,0,0" VerticalAlignment="Top" Width="230" ItemsSource="{Binding Markers}"/>
+        </Border>
+        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="1. Choose Machine" FontFamily="Yu Gothic UI Semibold" VerticalAlignment="Top" Margin="20,10,0,0" TextDecorations="Underline" FontSize="14" Width="130"/>
+        <ComboBox Name="machine" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="20,41,0,0" ItemsSource="{Binding MachineName}" RenderTransformOrigin="0.25,0.545" FontSize="14"/>
+        <Button Content="AddBeam" HorizontalAlignment="Left" VerticalAlignment="Top" Width="70" FontSize="14" Margin="180,41,0,0" Click="Button_Click" RenderTransformOrigin="0.133,0.5" FontFamily="Yu Gothic UI Semibold"/>
+        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="2. Multiple Isocenter" FontFamily="Yu Gothic UI Semibold" VerticalAlignment="Top" Margin="20,86,0,0" TextDecorations="Underline" FontSize="14"/>
+        <CheckBox Content="Apply Markers" HorizontalAlignment="Left" Margin="154,89,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked"/>
     </Grid>
 </UserControl>

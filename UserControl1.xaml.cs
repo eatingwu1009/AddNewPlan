@@ -34,7 +34,7 @@ namespace AddNewPlan
             MachineName.Add("LA5TB2069");
             MachineName.Add("LA6TB4313");
             MachineName.Add("LA7TB4557");
-            MachineName.Add("iX 1100");
+            //MachineName.Add("iX 1100");
 
             InitializeComponent();
             DataContext = this;

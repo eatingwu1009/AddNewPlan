@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using VMS.TPS.Common.Model.API;
 using VMS.TPS.Common.Model.Types;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 using AddNewPlan;
 
 
@@ -33,8 +34,10 @@ namespace VMS.TPS
             UserControl1 userControl = new UserControl1(scriptcontext);
             window.Content = userControl;
             window.Title = "AutoAddBeam";
-            window.Height = 300;
-            window.Width = 300;
+            window.Height = 200;
+            window.Width = 280;
+            Form form1 = new Form();
+            form1.StartPosition = FormStartPosition.CenterScreen;
         }
     }
 }

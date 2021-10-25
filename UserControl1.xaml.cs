@@ -15,6 +15,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using VMS.TPS.Common.Model.API;
 using VMS.TPS.Common.Model.Types;
+using System.Collections.Specialized;
+using System.ComponentModel;
 
 namespace AddNewPlan
 {
@@ -24,15 +26,15 @@ namespace AddNewPlan
     public partial class UserControl1 : UserControl
     {
         public List<String> MachineName { get; set; }
+        public List<double> IsoList { get; set; }
         public ScriptContext SC { get; set; }
         public VMS.TPS.Common.Model.API.Image SI { get; set; }
         public StructureSet SS { get; set; }
-        public List<String> Markers { get; set; }
         public UserControl1(ScriptContext scriptContext)
         {
             SC = scriptContext;
             SS = SC.StructureSet;
-            Markers = new List<string>();
+            IsoList = new List<double>();
 
             MachineName = new List<String>();
             MachineName.Add("LA3TB1623");
@@ -61,9 +63,16 @@ namespace AddNewPlan
                 ss = SI.CreateNewStructureSet();
                 ss.Id = SI.Id;
             }
-            ExternalPlanSetup plan = course.AddExternalPlanSetup(ss);
 
-            if (ss.Id.Length < 9) { plan.Id = "Load" + ss.Id; } else { plan.Id = ss.Id; }
+            string PLANID = string.Empty;
+            if (ss.Id.Length < 9) { PLANID = "Load" + ss.Id; } else { PLANID = ss.Id; }
+            ExternalPlanSetup plan = course.ExternalPlanSetups.Where(s => s.Id == PLANID).FirstOrDefault();
+            if (plan is null)
+            {
+                plan = course.AddExternalPlanSetup(ss);
+                plan.Id = PLANID;
+            }
+
             var BodyPar = ss.GetDefaultSearchBodyParameters();
             ss.CreateAndSearchBody(BodyPar);
 
@@ -71,6 +80,16 @@ namespace AddNewPlan
             ExternalBeamMachineParameters beamparams = new ExternalBeamMachineParameters(LINACID, "6X", 600, "STATIC", null);
             VVector isocenter = new VVector(SC.Image.UserOrigin.x, SC.Image.UserOrigin.y, SC.Image.UserOrigin.z);
             plan.AddMLCBeam(beamparams, null, new VRect<double>(-50, -50, 50, 50), 0, 0, 0, isocenter);
+
+            var MulIso = SS.Structures.Where(s => s.DicomType == "MARKER").ToList();
+            if ((bool)MultipleIsocenter.IsChecked)
+            {
+                foreach (Structure Iso in MulIso)
+                {
+                    VVector Isolocation = Iso.CenterPoint;
+                    plan.AddMLCBeam(beamparams, null, new VRect<double>(-50, -50, 50, 50), 0, 0, 0, Isolocation);
+                }
+            }
 
             var myDRR = new DRRCalculationParameters(500); // 500mm is the DRR size
             myDRR.SetLayerParameters(0, 0.1, -550, 0, -100, 100); // Layer 1
@@ -84,16 +103,21 @@ namespace AddNewPlan
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            Markers.Add("User Origin\tx:" + SC.Image.UserOrigin.x + "\ty:" + SC.Image.UserOrigin.y + "\tz:" + SC.Image.UserOrigin.y);
-            foreach(Structure a in SS.Structures.Where(s => s.DicomType == "MARKER"))
+            string MarkerDescript = string.Empty;
+            int a = 1;
+            var MulIso = SS.Structures.Where(s => s.DicomType == "MARKER").ToList();
+            MarkerDescript += "\nUser Origin\tx:" + SC.Image.UserOrigin.x + "\ty:" + SC.Image.UserOrigin.y + "\tz:" + SC.Image.UserOrigin.y;
+            foreach (Structure Iso in MulIso)
             {
-                Markers.Add("\n" + a.Id + "\tx:"+ a.CenterPoint.x + "\ty:" + a.CenterPoint.y+ "\tz:" + a.CenterPoint.z);
+                MarkerDescript += "\nIsocenter" + a + "\t\tx:" + Math.Round(Iso.CenterPoint.x/10,2) + "\ty:" + Math.Round(Iso.CenterPoint.y / 10,2) + "\tz:" + Math.Round(Iso.CenterPoint.z / 10,2);
+                a = a + 1;
             }
+            MessageBox.Show("You will Apply the following Beams" + MarkerDescript);
         }
-        
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
-            Markers.Clear();
+            string MarkerDescript = string.Empty;
+            MessageBox.Show("You will NOT apply multiple Isocenter");
         }
     }
 

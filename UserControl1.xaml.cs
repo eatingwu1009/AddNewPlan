@@ -81,15 +81,17 @@ namespace AddNewPlan
             VVector isocenter = new VVector(SC.Image.UserOrigin.x, SC.Image.UserOrigin.y, SC.Image.UserOrigin.z);
             plan.AddMLCBeam(beamparams, null, new VRect<double>(-50, -50, 50, 50), 0, 0, 0, isocenter);
 
-            var MulIso = SS.Structures.Where(s => s.DicomType == "MARKER").ToList();
+
             if ((bool)MultipleIsocenter.IsChecked)
             {
+                var MulIso = SS.Structures.Where(s => s.DicomType == "MARKER").ToList();
                 foreach (Structure Iso in MulIso)
-                {
-                    VVector Isolocation = Iso.CenterPoint;
-                    plan.AddMLCBeam(beamparams, null, new VRect<double>(-50, -50, 50, 50), 0, 0, 0, Isolocation);
-                }
-            }
+                    {
+                        VVector Isolocation = Iso.CenterPoint;
+                        plan.AddMLCBeam(beamparams, null, new VRect<double>(-50, -50, 50, 50), 0, 0, 0, Isolocation);
+                    }
+             }
+
 
             var myDRR = new DRRCalculationParameters(500); // 500mm is the DRR size
             myDRR.SetLayerParameters(0, 0.1, -550, 0, -100, 100); // Layer 1

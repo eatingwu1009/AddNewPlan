@@ -41,7 +41,7 @@ namespace AddNewPlan
             MachineName.Add("LA5TB2069");
             MachineName.Add("LA6TB4313");
             MachineName.Add("LA7TB4557");
-            MachineName.Add("iX 1100");
+            //MachineName.Add("iX 1100");
 
             InitializeComponent();
             DataContext = this;
@@ -117,7 +117,7 @@ namespace AddNewPlan
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
             string MarkerDescript = string.Empty;
-            MessageBox.Show("You will NOT apply multiple Isocenter");
+            MessageBox.Show("You will NOT apply multiple isocenters");
         }
     }
 

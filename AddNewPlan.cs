@@ -34,8 +34,8 @@ namespace VMS.TPS
             UserControl1 userControl = new UserControl1(scriptcontext);
             window.Content = userControl;
             window.Title = "AutoAddBeam";
-            window.Height = 200;
-            window.Width = 280;
+            window.Height = 190;
+            window.Width = 290;
             Form form1 = new Form();
             form1.StartPosition = FormStartPosition.CenterScreen;
         }

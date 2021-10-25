@@ -9,8 +9,8 @@
         <Border Background="AliceBlue" BorderThickness="0" HorizontalAlignment="Left" Width="275" Height="145" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Choose Machine" FontFamily="Trebuchet MS" VerticalAlignment="Top" Margin="19,21,0,0" TextDecorations="{x:Null}" FontSize="16" Width="155"/>
         <ComboBox Name="machine" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="20,42,0,0" ItemsSource="{Binding MachineName}" RenderTransformOrigin="0.25,0.545" FontSize="14"/>
-        <Button Content="AddBeam" HorizontalAlignment="Left" VerticalAlignment="Top" Width="70" FontSize="14" Margin="180,41,0,0" Click="Button_Click" RenderTransformOrigin="0.133,0.5" FontFamily="Yu Gothic UI Semibold"/>
-        <CheckBox Name="MultipleIsocenter" Content="Apply All Markers" HorizontalAlignment="Left" Margin="19,104,0,143" VerticalAlignment="Center" Checked="CheckBox_Checked" Width="230" FontSize="16" FontFamily="Trebuchet MS"/>
-        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" FontFamily="Trebuchet MS" VerticalAlignment="Top" Margin="19,82,0,0" TextDecorations="{x:Null}" Width="231" RenderTransformOrigin="0.49,-0.789" Text="Applying another Isocenter, plz check✔️  "/>
+        <Button Content="AddBeam➤" Background="Orchid" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0" Width="91" FontSize="16" Margin="174,42,0,0" Click="Button_Click" RenderTransformOrigin="0.133,0.5" FontFamily="Yu Gothic UI Semibold" Foreground="MistyRose" Height="25"/>
+        <CheckBox Name="MultipleIsocenter" Content="All Markers" HorizontalAlignment="Left" Margin="18,103,0,144" VerticalAlignment="Center" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" Width="230" FontSize="16" FontFamily="Trebuchet MS"/>
+        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" FontFamily="Trebuchet MS" VerticalAlignment="Top" Margin="20,84,0,0" TextDecorations="{x:Null}" Width="231" RenderTransformOrigin="0.49,-0.789" Text="plz check✔️If Applying another isocenters  "/>
     </Grid>
 </UserControl>

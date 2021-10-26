@@ -6,11 +6,12 @@
              xmlns:local="clr-namespace:AddNewPlan"
              mc:Ignorable="d" d:DesignWidth="400" Height="200">
     <Grid Margin="0,0,-10,-65">
-        <Border Background="AliceBlue" BorderThickness="0" HorizontalAlignment="Left" Width="275" Height="145" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Choose Machine" FontFamily="Trebuchet MS" VerticalAlignment="Top" Margin="19,21,0,0" TextDecorations="{x:Null}" FontSize="16" Width="155"/>
-        <ComboBox Name="machine" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="20,42,0,0" ItemsSource="{Binding MachineName}" RenderTransformOrigin="0.25,0.545" FontSize="14"/>
-        <Button Content="AddBeam➤" Background="Orchid" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0" Width="91" FontSize="16" Margin="174,42,0,0" Click="Button_Click" RenderTransformOrigin="0.133,0.5" FontFamily="Yu Gothic UI Semibold" Foreground="MistyRose" Height="25"/>
-        <CheckBox Name="MultipleIsocenter" Content="All Markers" HorizontalAlignment="Left" Margin="18,103,0,144" VerticalAlignment="Center" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" Width="230" FontSize="16" FontFamily="Trebuchet MS"/>
-        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" FontFamily="Trebuchet MS" VerticalAlignment="Top" Margin="20,84,0,0" TextDecorations="{x:Null}" Width="231" RenderTransformOrigin="0.49,-0.789" Text="plz check✔️If Applying another isocenters  "/>
+        <Border Background="AliceBlue" BorderThickness="0" HorizontalAlignment="Left" Width="330" Height="175" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Step3. Choose Machine" FontFamily="Calibri" VerticalAlignment="Top" Margin="17,46,0,0" TextDecorations="{x:Null}" FontSize="16" Width="155"/>
+        <ComboBox Name="machine" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="17,70,0,0" ItemsSource="{Binding MachineName}" RenderTransformOrigin="0.483,0.4" FontSize="14"/>
+        <Button Content="AddBeam➤" Background="Orchid" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0" Width="91" FontSize="16" Margin="220,70,0,0" Click="Button_Click" RenderTransformOrigin="0.495,0.6" FontFamily="Yu Gothic UI Semibold" Foreground="MistyRose" Height="25"/>
+        <CheckBox Name="MultipleIsocenter" Content="Apply All Markers" HorizontalAlignment="Left" Margin="17,107,0,142" VerticalAlignment="Center" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" Width="128" FontSize="14" FontFamily="Calibri"/>
+        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" FontFamily="Courier New" VerticalAlignment="Top" Margin="17,128,0,0" TextDecorations="{x:Null}" Width="231" RenderTransformOrigin="0.49,-0.789"><Run Text="To apply another isocenters "/><LineBreak/><Run Text="plz check✔️"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" FontFamily="Courier New" VerticalAlignment="Top" Margin="17,14,0,0" TextDecorations="{x:Null}" Width="313" RenderTransformOrigin="0.49,-0.789"><Run Text="1. Confirm User Origin"/><LineBreak/><Run Text="2. Drag the DICOM series into main window"/></TextBlock>
     </Grid>
 </UserControl>

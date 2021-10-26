@@ -114,7 +114,7 @@ namespace AddNewPlan
                 MarkerDescript += "\nIsocenter" + a + "\t\tx:" + Math.Round(Iso.CenterPoint.x/10,2) + "\ty:" + Math.Round(Iso.CenterPoint.y / 10,2) + "\tz:" + Math.Round(Iso.CenterPoint.z / 10,2);
                 a = a + 1;
             }
-            MessageBox.Show("You will Apply the following Beams" + MarkerDescript);
+            MessageBox.Show("You will Apply the following Beams\n------------------------------------------------------" + MarkerDescript);
         }
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {

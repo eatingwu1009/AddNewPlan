@@ -78,7 +78,7 @@ namespace AddNewPlan
 
             string LINACID = machine.SelectedItem.ToString();
             ExternalBeamMachineParameters beamparams = new ExternalBeamMachineParameters(LINACID, "6X", 600, "STATIC", null);
-            VVector isocenter = new VVector(SC.Image.UserOrigin.x, SC.Image.UserOrigin.y, SC.Image.UserOrigin.z);
+            VVector isocenter = SC.Image.UserOrigin;
             plan.AddMLCBeam(beamparams, null, new VRect<double>(-50, -50, 50, 50), 0, 0, 0, isocenter);
 
 
@@ -108,7 +108,7 @@ namespace AddNewPlan
             string MarkerDescript = string.Empty;
             int a = 1;
             var MulIso = SS.Structures.Where(s => s.DicomType == "MARKER").ToList();
-            MarkerDescript += "\nUser Origin\tx:" + SC.Image.UserOrigin.x + "\ty:" + SC.Image.UserOrigin.y + "\tz:" + SC.Image.UserOrigin.y;
+            MarkerDescript += "\nUser Origin\tx:" + Math.Round(SC.Image.UserOrigin.x/10,2) + "\ty:" + Math.Round(SC.Image.UserOrigin.y / 10, 2) + "\tz:" + Math.Round(SC.Image.UserOrigin.z / 10, 2);
             foreach (Structure Iso in MulIso)
             {
                 MarkerDescript += "\nIsocenter" + a + "\t\tx:" + Math.Round(Iso.CenterPoint.x/10,2) + "\ty:" + Math.Round(Iso.CenterPoint.y / 10,2) + "\tz:" + Math.Round(Iso.CenterPoint.z / 10,2);

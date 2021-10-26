@@ -35,7 +35,7 @@ namespace VMS.TPS
             window.Content = userControl;
             window.Title = "AutoAddBeam";
             window.Height = 245;
-            window.Width = 325;
+            window.Width = 340;
             Form form1 = new Form();
             form1.StartPosition = FormStartPosition.CenterScreen;
         }

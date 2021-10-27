@@ -30,10 +30,15 @@ namespace AddNewPlan
         public ScriptContext SC { get; set; }
         public VMS.TPS.Common.Model.API.Image SI { get; set; }
         public StructureSet SS { get; set; }
+        public VVector SIU { get; set; }
+        //public VVector SIO { get; set; }
         public UserControl1(ScriptContext scriptContext)
         {
             SC = scriptContext;
             SS = SC.StructureSet;
+            SI = SC.Image;
+            SIU = SI.UserOrigin;
+            //SIO = SI.Origin;
             IsoList = new List<double>();
 
             MachineName = new List<String>();
@@ -49,7 +54,6 @@ namespace AddNewPlan
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             SC.Patient.BeginModifications();
-            SI = SC.Image;
             Course course = SC.Patient.Courses.Where(s => s.Id =="AutoLoad").FirstOrDefault();
             if (course is null)
             {
@@ -78,8 +82,7 @@ namespace AddNewPlan
 
             string LINACID = machine.SelectedItem.ToString();
             ExternalBeamMachineParameters beamparams = new ExternalBeamMachineParameters(LINACID, "6X", 600, "STATIC", null);
-            VVector isocenter = SC.Image.UserOrigin;
-            plan.AddMLCBeam(beamparams, null, new VRect<double>(-50, -50, 50, 50), 0, 0, 0, isocenter);
+            plan.AddMLCBeam(beamparams, null, new VRect<double>(-50, -50, 50, 50), 0, 0, 0, SIU);
 
 
             if ((bool)MultipleIsocenter.IsChecked)
@@ -106,14 +109,16 @@ namespace AddNewPlan
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             string MarkerDescript = string.Empty;
+
             int a = 1;
             var MulIso = SS.Structures.Where(s => s.DicomType == "MARKER").ToList();
-            MarkerDescript += "\nUser Origin\tx:" + Math.Round(SC.Image.UserOrigin.x/10,2) + "\ty:" + Math.Round(SC.Image.UserOrigin.y / 10, 2) + "\tz:" + Math.Round(SC.Image.UserOrigin.z / 10, 2);
+            MarkerDescript += "\nUser Origin\tx:0\ty:0\tz:0";
             foreach (Structure Iso in MulIso)
             {
-                MarkerDescript += "\nIsocenter" + a + "\t\tx:" + Math.Round(Iso.CenterPoint.x/10,2) + "\ty:" + Math.Round(Iso.CenterPoint.y / 10,2) + "\tz:" + Math.Round(Iso.CenterPoint.z / 10,2);
+                MarkerDescript += "\nIsocenter" + a + "\t\tx:" + Math.Round((Iso.CenterPoint.x - SIU.x) / 10,2) + "\ty:" + Math.Round((Iso.CenterPoint.y - SIU.y) / 10,2) + "\tz:" + Math.Round((Iso.CenterPoint.z - SIU.z) / 10,2);
                 a = a + 1;
             }
+            //MessageBox.Show(Convert.ToInt32(SIU.x).ToString()+","+ Convert.ToInt32(SIU.y).ToString()+ "," + Convert.ToInt32(SIU.z).ToString() + "," + Convert.ToInt32(SIO.x).ToString()+ "," + Convert.ToInt32(SIO.y).ToString()+ "," + Convert.ToInt32(SIO.z).ToString());
             MessageBox.Show("You will Apply the following Beams\n------------------------------------------------------" + MarkerDescript);
         }
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)

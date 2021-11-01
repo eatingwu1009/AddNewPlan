@@ -13,8 +13,8 @@ using AddNewPlan;
 
 
 // TODO: Replace the following version attributes by creating AssemblyInfo.cs. You can do this in the properties of the Visual Studio project.
-[assembly: AssemblyVersion("1.0.0.4")]
-[assembly: AssemblyFileVersion("1.0.0.4")]
+[assembly: AssemblyVersion("1.0.0.5")]
+[assembly: AssemblyFileVersion("1.0.0.5")]
 [assembly: AssemblyInformationalVersion("1.0")]
 
 // TODO: Uncomment the following line if the script requires write access.
@@ -34,8 +34,8 @@ namespace VMS.TPS
             UserControl1 userControl = new UserControl1(scriptcontext);
             window.Content = userControl;
             window.Title = "AutoAddBeam";
-            window.Height = 245;
-            window.Width = 340;
+            window.Height = 220;
+            window.Width = 435;
             Form form1 = new Form();
             form1.StartPosition = FormStartPosition.CenterScreen;
         }

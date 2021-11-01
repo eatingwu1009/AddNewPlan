@@ -4,21 +4,19 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AddNewPlan"
-             mc:Ignorable="d" d:DesignWidth="400" Height="200">
+             mc:Ignorable="d" Height="200" Width="425">
     <Grid Margin="0,0,-10,-65">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="395"/>
-            <ColumnDefinition Width="0*"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="410"/>
         </Grid.ColumnDefinitions>
-        <Border Background="AliceBlue" BorderThickness="0" HorizontalAlignment="Left" Width="320" Height="195" VerticalAlignment="Top" Margin="0,10,0,0"/>
-        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Final. Choose Machine" FontFamily="Calibri" VerticalAlignment="Top" Margin="10,112,0,0" TextDecorations="{x:Null}" FontSize="16" Width="155" Height="24"/>
-        <ComboBox Name="machine" HorizontalAlignment="Left" VerticalAlignment="Top" Width="117" Margin="10,134,0,0" ItemsSource="{Binding MachineName}" RenderTransformOrigin="0.483,0.516" FontSize="14" Height="29"/>
-        <Button Content="AddBeam➤" Background="Orchid" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0" Width="95" FontSize="16" Margin="215,123,0,0" Click="Button_Click" RenderTransformOrigin="0.495,0.6" FontFamily="Yu Gothic UI Semibold" Foreground="MistyRose" Height="44"/>
-        <CheckBox Name="MultipleIsocenter" Content="Apply All Markers" HorizontalAlignment="Left" Margin="10,169,0,76" VerticalAlignment="Center" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" Width="128" FontSize="14" FontFamily="Calibri" Height="20"/>
-        <Border VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="2" BorderBrush="Plum" Margin="8,33,0,0" Width="302" Height="74">
-            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" FontFamily="Courier New" Margin="9,9,-2,0" TextDecorations="{x:Null}" Width="281" RenderTransformOrigin="0.49,-0.789" Grid.ColumnSpan="2" Height="53" VerticalAlignment="Top"><Run Text="1. Drag DICOM 3Dseries into main window"/><LineBreak/><Run Text="2. Confirm User Origin "/><LineBreak/><Run Text="3. To apply another isocenters,"/><LineBreak/><Run Text="   check✔️ the box below"/><LineBreak/><Run/></TextBlock>
+        <Border Background="AliceBlue" BorderThickness="0" HorizontalAlignment="Left" Width="420" Height="150" VerticalAlignment="Top" Margin="0,10,-9,0"/>
+        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Choose Machine" FontFamily="Calibri" VerticalAlignment="Top" Margin="10,95,0,0" TextDecorations="{x:Null}" FontSize="16" Width="155" Height="24"/>
+        <ComboBox Name="machine" HorizontalAlignment="Left" VerticalAlignment="Top" Width="117" Margin="130,95,0,0" ItemsSource="{Binding MachineName}" RenderTransformOrigin="0.483,0.516" FontSize="14" Height="29"/>
+        <Button Content="AddBeam➤" Background="Orchid" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0" Width="95" FontSize="16" Margin="316,95,0,0" Click="Button_Click" RenderTransformOrigin="0.495,0.6" FontFamily="Yu Gothic UI Semibold" Foreground="MistyRose" Height="44"/>
+        <CheckBox Name="MultipleIsocenter" Content="Apply All Markers" HorizontalAlignment="Left" Margin="130,129,0,116" VerticalAlignment="Center" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" Width="128" FontSize="14" FontFamily="Calibri" Height="20"/>
+        <Border VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="2" BorderBrush="Plum" Margin="8,33,0,0" Width="402" Height="57">
+            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" FontFamily="Courier New" Margin="9,9,0,0" TextDecorations="{x:Null}" Width="396" RenderTransformOrigin="0.49,-0.789" Grid.ColumnSpan="2" Height="53" VerticalAlignment="Top"><Run Text="1. Drag DICOM 3D"/><Run Text=" "/><Run Text="series into main window"/><LineBreak/><Run Text="2. Confirm User Origin "/><LineBreak/><Run Text="3. To apply another isocenters, check✔️ the box below"/><LineBreak/><Run/></TextBlock>
         </Border>
-        <Label Background="AliceBlue"  Content=" NOTE" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="21,16,310,223" FontSize="14" FontFamily="Courier New" Width="64" FontWeight="Bold" Height="26"/>
+        <Label Background="AliceBlue"  Content=" NOTE" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="21,16,325,223" FontSize="14" FontFamily="Courier New" Width="64" FontWeight="Bold" Height="26"/>
     </Grid>
 </UserControl>

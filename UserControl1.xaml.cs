@@ -18,7 +18,7 @@ using VMS.TPS.Common.Model.Types;
 using System.Collections.Specialized;
 using System.ComponentModel;
 
-namespace AddNewPlan
+namespace AddNewBeam
 {
     /// <summary>
     /// Interaction logic for UserControl1.xaml

@@ -69,7 +69,7 @@ namespace AddNewBeam
             }
 
             string PLANID = string.Empty;
-            if (ss.Id.Length < 9) { PLANID = "Load" + ss.Id; } else { PLANID = ss.Id; }
+            if (ss.Id.Length > 9 ) { PLANID = ss.Id.Substring(0,8) ; } else { PLANID = "Load" + ss.Id; }
             ExternalPlanSetup plan = course.ExternalPlanSetups.Where(s => s.Id == PLANID).FirstOrDefault();
             if (plan is null)
             {

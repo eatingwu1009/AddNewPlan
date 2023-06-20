@@ -18,13 +18,14 @@ using VMS.TPS.Common.Model.Types;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using AddNewBeam;
+using System.Windows.Forms;
 
 namespace AddNewBeam
 {
     /// <summary>
     /// Interaction logic for UserControl1.xaml
     /// </summary>
-    public partial class UserControl1 : UserControl
+    public partial class UserControl1 : System.Windows.Controls.UserControl
     {
         public List<String> MachineName { get; set; }
         public List<double> IsoList { get; set; }
@@ -82,7 +83,7 @@ namespace AddNewBeam
             PatientOrientation orientation = SC.Image.ImagingOrientation;
             if (orientation == PatientOrientation.HeadFirstSupine | orientation == PatientOrientation.FeetFirstSupine | orientation == PatientOrientation.Sitting) chkOrientation = 1;
             else if (orientation == PatientOrientation.HeadFirstProne | orientation == PatientOrientation.FeetFirstProne) chkOrientation = -1;
-            else MessageBox.Show("This CT image Orientation is not supported : No Orientation or Decubitus");
+            else System.Windows.Forms.MessageBox.Show("This CT image Orientation is not supported : No Orientation or Decubitus");
 
             SC.Patient.BeginModifications();
             StructureSet SS = SC.StructureSet;
@@ -249,18 +250,36 @@ namespace AddNewBeam
             FinalYcenter = FinalYcenter - 0.4 * chkOrientation;
             bool imageResized = true;
             string errorCouch = "error";
-            List<VVector> CSVVector = new List<VVector>();
-            if (SS.Structures.FirstOrDefault(s => s.DicomType == "EXTERNAL") is null | SS.Structures.FirstOrDefault(s => s.DicomType == "EXTERNAL").Volume == 0)
+            Structure BODY = SS.Structures.FirstOrDefault(s => s.DicomType == "EXTERNAL");
+            double BodyVolume = new double();
+            if (BODY == null)
             {
                 var BodyPar = SS.GetDefaultSearchBodyParameters();
+                BodyPar.KeepLargestParts = true;
+                SS.CreateAndSearchBody(BodyPar);
+                BodyVolume = SS.Structures.FirstOrDefault(s => s.DicomType == "EXTERNAL").Volume;
+                SS.RemoveStructure(SS.Structures.FirstOrDefault(s => s.DicomType == "EXTERNAL"));
+                BodyPar = SS.GetDefaultSearchBodyParameters();
                 BodyPar.KeepLargestParts = false;
                 SS.CreateAndSearchBody(BodyPar);
             }
+            else if (BODY.Volume == 0)
+            {
+                var BodyPar = SS.GetDefaultSearchBodyParameters();
+                BodyPar.KeepLargestParts = true;
+                SS.CreateAndSearchBody(BodyPar);
+                BodyVolume = SS.Structures.FirstOrDefault(s => s.DicomType == "EXTERNAL").Volume;
+                SS.RemoveStructure(SS.Structures.FirstOrDefault(s => s.DicomType == "EXTERNAL"));
+                BodyPar = SS.GetDefaultSearchBodyParameters();
+                BodyPar.KeepLargestParts = false;
+                SS.CreateAndSearchBody(BodyPar);
+            }
+            List<VVector> CSVVector = new List<VVector>();
             if (SS.CanAddCouchStructures(out errorCouch) == true)
             {
                 SS.AddCouchStructures("Exact_IGRT_Couch_Top_medium", orientation, RailPosition.In, RailPosition.In, -500, -950, null, out IReadOnlyList<Structure> couchStructureList, out imageResized, out errorCouch);
-                Structure CouchSurface = SS.Structures.FirstOrDefault(i => i.Id == "CouchSurface");
-                Structure CouchInterior = SS.Structures.FirstOrDefault(i => i.Id == "CouchInterior");
+                Structure CouchSurface = SS.Structures.FirstOrDefault(t => t.Id == "CouchSurface");
+                Structure CouchInterior = SS.Structures.FirstOrDefault(t => t.Id == "CouchInterior");
                 StructureCode CScode = CouchSurface.StructureCode;
                 StructureCode CIcode = CouchInterior.StructureCode;
                 CouchSurface.SegmentVolume = CouchSurface.SegmentVolume.Or(CouchInterior.SegmentVolume);
@@ -313,20 +332,22 @@ namespace AddNewBeam
                 CouchInterior.StructureCode = CIcode;
 
                 //BODY part
+                BODY = SS.Structures.FirstOrDefault(s => s.DicomType == "EXTERNAL");
                 Structure Temp = SS.AddStructure("CONTROL", "Temp_ForCouch");
                 VVector[] TempVec = GetpseudoLine(FinalYcenter, SI.XSize, SI.YSize, chkOrientation);
                 for (int i = 0; i < Convert.ToInt32(SI.ZSize); i++)
                 {
                     Temp.AddContourOnImagePlane(TempVec, i);
                 }
-                Structure BODY = SS.Structures.FirstOrDefault(s => s.DicomType == "EXTERNAL");
                 BODY.SegmentVolume = BODY.SegmentVolume.Sub(Temp.SegmentVolume);
                 SS.RemoveStructure(Temp);
+                if (BODY.Volume > BodyVolume) { System.Windows.Forms.MessageBox.Show("Please Check your BODY carefully", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
+                BODY.Comment = "Modified by ESAPI";
             }
             else if (errorCouch.Contains("Support structures already exist in the structure set."))
             {
-                Structure CouchSurface = SS.Structures.FirstOrDefault(i => i.Id == "CouchSurface");
-                Structure CouchInterior = SS.Structures.FirstOrDefault(i => i.Id == "CouchInterior");
+                CSVVector.Clear();
+                Structure CouchSurface = SS.Structures.FirstOrDefault(t => t.Id == "CouchSurface");
                 foreach (VVector[] vectors in CouchSurface.GetContoursOnImagePlane(1))
                 {
                     foreach (VVector v in vectors)
@@ -340,21 +361,23 @@ namespace AddNewBeam
                 if (chkOrientation == 1)
                 { FinalYcenter = CSVVector.Min(p => p.y); }
                 else { FinalYcenter = CSVVector.Max(p => p.y); }
+                BODY = SS.Structures.FirstOrDefault(s => s.DicomType == "EXTERNAL");
                 Structure Temp = SS.AddStructure("CONTROL", "Temp_ForCouch");
                 VVector[] TempVec = GetpseudoLine(FinalYcenter, SI.XSize, SI.YSize, chkOrientation);
                 for (int i = 0; i < Convert.ToInt32(SI.ZSize); i++)
                 {
                     Temp.AddContourOnImagePlane(TempVec, i);
                 }
-                Structure BODY = SS.Structures.FirstOrDefault(s => s.DicomType == "EXTERNAL");
                 BODY.SegmentVolume = BODY.SegmentVolume.Sub(Temp.SegmentVolume);
                 SS.RemoveStructure(Temp);
+                if (BODY.Volume > BodyVolume) { System.Windows.Forms.MessageBox.Show("Please Check your BODY carefully", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
+                BODY.Comment = "Modified by ESAPI";
             }
-            else { MessageBox.Show(errorCouch); }
+            else { System.Windows.MessageBox.Show(errorCouch); }
 
-            string LINACID = machine.SelectedItem.ToString();
-            ExternalBeamMachineParameters beamparams = new ExternalBeamMachineParameters(LINACID, "6X", 600, "STATIC", null);
-            plan.AddMLCBeam(beamparams, null, new VRect<double>(-50, -50, 50, 50), 0, 0, 0, SIU);
+        string LINACID = machine.SelectedItem.ToString();
+        ExternalBeamMachineParameters beamparams = new ExternalBeamMachineParameters(LINACID, "6X", 600, "STATIC", null);
+        plan.AddMLCBeam(beamparams, null, new VRect<double>(-50, -50, 50, 50), 0, 0, 0, SIU);
 
 
             if ((bool)MultipleIsocenter.IsChecked)
@@ -391,12 +414,12 @@ namespace AddNewBeam
                 a = a + 1;
             }
             //MessageBox.Show(Convert.ToInt32(SIU.x).ToString()+","+ Convert.ToInt32(SIU.y).ToString()+ "," + Convert.ToInt32(SIU.z).ToString() + "," + Convert.ToInt32(SIO.x).ToString()+ "," + Convert.ToInt32(SIO.y).ToString()+ "," + Convert.ToInt32(SIO.z).ToString());
-            MessageBox.Show("You will Apply the following Beams\n------------------------------------------------------" + MarkerDescript);
+            System.Windows.Forms.MessageBox.Show("You will Apply the following Beams\n------------------------------------------------------" + MarkerDescript);
         }
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
             string MarkerDescript = string.Empty;
-            MessageBox.Show("You will NOT apply multiple isocenters");
+            System.Windows.Forms.MessageBox.Show("You will NOT apply multiple isocenters");
         }
 
         public static VVector FindHighestSlope(ImageProfile collection)

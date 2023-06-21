@@ -265,8 +265,7 @@ namespace AddNewBeam
                 BodyPar = SS.GetDefaultSearchBodyParameters();
                 //NTUH default setting
                 BodyPar.KeepLargestParts = false;
-                BodyPar.PreDisconnect = true;
-                BodyPar.PreDisconnectRadius = 0.2;
+                BodyPar.PreDisconnect = false;
                 BodyPar.FillAllCavities = true;
                 BodyPar.PreCloseOpenings = true;
                 BodyPar.PreCloseOpeningsRadius = 0.2;
@@ -284,8 +283,7 @@ namespace AddNewBeam
                 BodyPar = SS.GetDefaultSearchBodyParameters();
                 //NTUH default setting
                 BodyPar.KeepLargestParts = false;
-                BodyPar.PreDisconnect = true;
-                BodyPar.PreDisconnectRadius = 0.2;
+                BodyPar.PreDisconnect = false;
                 BodyPar.FillAllCavities = true;
                 BodyPar.PreCloseOpenings = true;
                 BodyPar.PreCloseOpeningsRadius = 0.2;

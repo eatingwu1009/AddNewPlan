@@ -33,7 +33,7 @@ namespace VMS.TPS
         {
             UserControl1 userControl = new UserControl1(scriptcontext);
             window.Content = userControl;
-            window.Title = "AutoAddBeam";
+            window.Title = "AutoAddPlan_EatingWu🌼";
             window.Height = 220;
             window.Width = 435;
             Form form1 = new Form();

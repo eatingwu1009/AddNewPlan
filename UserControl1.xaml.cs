@@ -296,7 +296,7 @@ namespace AddNewBeam
             if (XamlAddCouch == true)
             {
                 bool AddCouch = true;
-                if (SI.XSize <= 540)
+                if (SI.XSize* SI.XRes <= 540)
                 {
                     DialogResult result = System.Windows.Forms.MessageBox.Show("Enlarging is irreversible. Are you sure you want to enlarge the image?", "External Beam Planning", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (result == DialogResult.No) { AddCouch = false; }

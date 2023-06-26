@@ -264,6 +264,7 @@ namespace AddNewBeam
                 SS.RemoveStructure(SS.Structures.FirstOrDefault(s => s.DicomType == "EXTERNAL"));
                 BodyPar = SS.GetDefaultSearchBodyParameters();
                 //NTUH default setting
+                BodyPar.LowerHUThreshold = -350;
                 BodyPar.KeepLargestParts = false;
                 BodyPar.PreDisconnect = false;
                 BodyPar.FillAllCavities = true;
@@ -282,6 +283,7 @@ namespace AddNewBeam
                 SS.RemoveStructure(SS.Structures.FirstOrDefault(s => s.DicomType == "EXTERNAL"));
                 BodyPar = SS.GetDefaultSearchBodyParameters();
                 //NTUH default setting
+                BodyPar.LowerHUThreshold = -350;
                 BodyPar.KeepLargestParts = false;
                 BodyPar.PreDisconnect = false;
                 BodyPar.FillAllCavities = true;

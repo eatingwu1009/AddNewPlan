@@ -1,20 +1,12 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Runtime.CompilerServices;
+﻿using System.Reflection;
 using VMS.TPS.Common.Model.API;
-using VMS.TPS.Common.Model.Types;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using AddNewBeam;
 
 
 // TODO: Replace the following version attributes by creating AssemblyInfo.cs. You can do this in the properties of the Visual Studio project.
-[assembly: AssemblyVersion("1.0.0.8")]
-[assembly: AssemblyFileVersion("1.0.0.8")]
+[assembly: AssemblyVersion("1.0.0.10")]
+[assembly: AssemblyFileVersion("1.0.0.10")]
 [assembly: AssemblyInformationalVersion("1.0")]
 
 // TODO: Uncomment the following line if the script requires write access.

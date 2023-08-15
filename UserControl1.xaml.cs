@@ -32,7 +32,8 @@ namespace AddNewBeam
             SIU = SI.UserOrigin;
             IsoList = new List<double>();
 
-            string[] Basiclines = File.ReadAllLines(@"\\Vmstbox161\va_data$\ProgramData\Vision\PublishedScripts\Machine.csv");
+            string[] Basiclines = File.ReadAllLines(@"\\aria15sql\VA_DATA$\ProgramData\Vision\PublishedScripts\AddNewPlan_Machine_Option.csv");
+            //@"C:\Users\aria\Desktop\ChihKai\API\Machine_Option.csv"
             List<string> sourceMachine = Basiclines[0].Trim().Split(',').Select(s => s.Trim()).ToList();
             MachineName = new List<String>();
             foreach (string line in sourceMachine)
@@ -352,19 +353,6 @@ namespace AddNewBeam
                             CouchSurface.Comment = "NTUH_Exact IGRT Couch, medium";
                             CouchSurface.StructureCode = CScode;
                             CouchInterior.StructureCode = CIcode;
-
-                            //BODY part
-                            BODY = SS.Structures.FirstOrDefault(s => s.DicomType == "EXTERNAL");
-                            Structure Temp = SS.AddStructure("CONTROL", "Temp_ForCouch");
-                            VVector[] TempVec = GetpseudoLine(FinalYcenter, SI.XSize, SI.YSize, chkOrientation);
-                            for (int i = 0; i < Convert.ToInt32(SI.ZSize); i++)
-                            {
-                                Temp.AddContourOnImagePlane(TempVec, i);
-                            }
-                            BODY.SegmentVolume = BODY.SegmentVolume.Sub(Temp.SegmentVolume);
-                            SS.RemoveStructure(Temp);
-                            if (BODY.Volume > BodyVolume) { System.Windows.Forms.MessageBox.Show("Please Check your BODY carefully", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
-                            BODY.Comment = "Modified by ESAPI";
                         }
                         else if (errorCouch.Contains("Support structures already exist in the structure set."))
                         {
@@ -423,13 +411,8 @@ namespace AddNewBeam
                                 BodyPar.SmoothingLevel = 1;
                                 //NTUH default setting
                                 BodyPar.KeepLargestParts = false;
-                                //BodyPar.PreDisconnect = true;
-                                //BodyPar.PreDisconnectRadius = 0.2;
-                                //BodyPar.FillAllCavities = true;
-                                //BodyPar.PreCloseOpenings = true;
-                                //BodyPar.PreCloseOpeningsRadius = 0.2;
-                                //BodyPar.Smoothing = true;
-                                //BodyPar.SmoothingLevel = 3;
+                                BodyPar.PreCloseOpenings = true;
+                                BodyPar.PreCloseOpeningsRadius = 0.2;
                                 SS.CreateAndSearchBody(BodyPar);
                                 Structure Temp = SS.AddStructure("CONTROL", "Temp_ForCouch");
                                 VVector[] TempVec = GetpseudoLine(FinalYcenter, SI.XSize, SI.YSize, chkOrientation);
